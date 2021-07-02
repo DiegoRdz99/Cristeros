@@ -11,7 +11,7 @@ def bold(string):
 # Cifrado César
 
 def cesar(word='',op=add):
-    wd = word.split()
+    wd = word.lower().split()
     wd2 = []
     for i in range(len(wd)):
         wd1 = [op(letnum(letter),3) for letter in wd[i]]
@@ -43,7 +43,7 @@ def cesar2(word=''):
 # Cifrado Rotacional
 
 def crot(word='',op=add,n=3):
-    wd = word.split()
+    wd = word.lower().split()
     wd2 = []
     for i in range(len(wd)):
         wd1 = [op(letnum(letter),n) for letter in wd[i]] # Rotacíon de n letras
@@ -75,7 +75,7 @@ def crot2(word='',n=3):
 # Cifrado por Transposición
 
 def trp(word=''):
-    wd = word.split()
+    wd = word.lower().split()
     wd2 = [elm[::-1] for elm in wd]
     wd2 = ' '.join(wd2)
     return wd2
@@ -95,7 +95,7 @@ def trp1(word=''):
 
 def vig(key='',word='',op=add):
     keyN = [ord(letter) - ord('a') for letter in key] # Clave a números
-    words = word.split()
+    words = word.lower().split()
     wd,KEY,wd2 = [[]]*len(words),[[]]*len(words),[[]]*len(words) # Listas vacías
     ct = 0
     for i in range(len(words)):
@@ -137,7 +137,7 @@ def mur(word='',n=0,key='murcielago'):
     mur_wd = [letter for letter in 'murcielago']
     mur_num = [str((num+n)%10) for num in range(10)]
     mur_dic = dict(zip(mur_wd+mur_num,mur_num+mur_wd))
-    wd = ''.join([mur_dic[letter] if (letter in mur_dic) else letter for letter in word])
+    wd = ''.join([mur_dic[letter] if (letter in mur_dic) else letter for letter in word.lower()])
     return wd
     
 def mur1(word='',n=0,key='murcielago'):
@@ -182,7 +182,7 @@ for i in range(len(morse_sen)):
     addic(morse_sen[i])
 
 def morse(word=''):
-    wd = [morse_dic[letter] + '/' for letter in word]
+    wd = [morse_dic[letter] + '/' for letter in word.lower()]
     wd2 = ''.join(wd)
     return wd2
 
@@ -203,7 +203,7 @@ def addic_inv(tup,dic=morse_dic_inv):
 for i in range(len(morse_sym)):
     addic_inv(morse_sym[i])
 def morsi(word=''):
-    wd = word.split('/')
+    wd = word.lower().split('/')
     wd = [morse_dic_inv[letter] for letter in wd]
     wd2 = ''.join(wd)
     return wd2
