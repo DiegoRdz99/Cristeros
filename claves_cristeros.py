@@ -91,6 +91,7 @@ def trp1(word=''):
         print(".........................................................")
         word = input('Texto plano: ')
 
+# Cifrado de Vigenere
 
 def vig(key='',word='',op=add):
     keyN = [ord(letter) - ord('a') for letter in key] # Clave a números
@@ -135,7 +136,7 @@ def vig2(key="",word=""):
 def mur(word='',n=0,key='murcielago'):
     mur_wd = [letter for letter in 'murcielago']
     mur_num = [str((num+n)%10) for num in range(10)]
-    mur_dic = dict(zip(mur_wd,mur_num))
+    mur_dic = dict(zip(mur_wd+mur_num,mur_num+mur_wd))
     wd = ''.join([mur_dic[letter] if (letter in mur_dic) else letter for letter in word])
     return wd
     
