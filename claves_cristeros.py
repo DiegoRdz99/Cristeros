@@ -132,7 +132,17 @@ def vig2(key="",word=""):
         print(bold("Out:"),wd2)
         print(".........................................................")
         key = input("Clave: ")
-    
+
+# Clave Inversa
+
+def inv(word=''):
+    wd = '»'.join(word.lower().split(' '))
+    wd2 = ''.join([chr(abs(219-ord(letter))) for letter in wd])
+    wd2 = 'ñ'.join(wd2.split('\x16'))
+    return wd2
+
+# Clave Murciélago
+
 def mur(word='',n=0,key='murcielago'):
     mur_wd = [letter for letter in 'murcielago']
     mur_num = [str((num+n)%10) for num in range(10)]
@@ -222,7 +232,7 @@ from pydub import AudioSegment
 from pydub.playback import play
 from pydub.generators import Sine
 
-def morsd(word='',freq=700,unit=350):
+def morsd(word='',freq=700,unit=350,file=False):
     if word == '':
         word = input('Texto plano: ')
     gen = Sine(freq)
@@ -235,7 +245,11 @@ def morsd(word='',freq=700,unit=350):
     wd = morse(word)
     morseplit = '0'.join([sym for sym in wd])
     morseplay = [MAD[sym] for sym in morseplit]
-    return sum(morseplay)
+    out = sum(morseplay)
+    if file:
+        file_name = input('Nombre del archivo: ')
+        out.export(file_name+'.mp3',format = 'mp3')
+    return out
 
 def morse_tr(word='',freq=700,unit=350):
     if word == '':
@@ -253,3 +267,20 @@ def morse_tr(word='',freq=700,unit=350):
     morseplay = [MAD[sym] for sym in morseplit]
     return sum(morseplay)
 
+# Práctica dictado de morse
+
+import string,random,threading
+def practice(n = 10,unit=400):
+    word = ''.join(random.choice(string.ascii_lowercase) for _ in range(n))
+    wd2 = morsd(word,unit=unit)
+    def f1():
+        answer = input('Frase dictada:')
+        if answer == word:
+            print('¡Correcto!')
+        else:
+            print('Incorrecto')
+            print('La frase era:',word)
+    def f2(aud):
+        play(aud)
+    threading.Thread(target=f1).start()
+    threading.Thread(target=f2(wd2)).start()
